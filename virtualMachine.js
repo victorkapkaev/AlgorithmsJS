@@ -1,3 +1,4 @@
+// to run it, you must have in same directory file .txt with program. Then you need input this file name as arg in command line
 const readline = require('readline-sync');
 let arg = process.argv;
 let fs = require('fs');
