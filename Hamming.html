@@ -1,0 +1,122 @@
+<head>
+<script type = "text/javascript">
+function reverse(str){
+  let reversed = "";    
+  for (var i = str.length - 1; i >= 0; i--){        
+    reversed += str[i];
+  }    
+  return reversed;
+}
+
+function log2(x)
+{
+	return Math.log(x) / Math.log(2.0);
+}
+
+function CountOnes(output)
+{
+	let ones = new Array();
+	for(i = output.length - 1; i >= 0; i--)
+		if(output[i] == '1')
+			ones.push(i);
+	return ones;
+}
+
+function GetXor(ones)
+{
+	let result = 0;
+	for(i = 0; i < ones.length; i++)
+	{
+		result = result ^ ones[i];
+	}
+	return result;
+}
+
+function encode() {
+	let str = P1.value;
+	str = str.split("");
+	str = str.reverse();
+	
+	var bound = str.length + Math.ceil(log2(str.length)) + 1;
+	
+	let output = new Array(100).fill('_');
+	let step = 1;
+	for(i = 1; i < output.length; i++)
+	{
+		if(step <= bound)
+		{
+			output[step] = '*'
+			step *= 2;
+		}
+	}
+	let j = 0;
+	for(i = 1; i < output.length; i++)
+	{
+		if((output[i] != '*') && (j < str.length))
+		{
+			output[i] = str[j];
+			j++;
+		}
+	}
+	
+	let array = new Array();
+	array.push('/');
+	for(i = 1; i < output.length; i++)
+	{
+		if(output[i] != '_')
+			array.push(output[i]);
+	}
+
+	var ones = CountOnes(array);
+	var result = GetXor(ones);
+	var x = (result).toString(2);
+	let resultString = "";
+	j = x.length - 1;
+	for (i = 1; i < array.length ; i++)
+	{
+		if (array[i] == '*')
+			{
+				array[i] = x[j];
+				j--;
+			}
+		resultString += array[i];
+	}
+	resultString = resultString.replace('undefined', '0');
+	resultString = resultString.split('undefined').join('0');
+	resultString = reverse(resultString);
+	ones.clear;
+	P2.value = resultString;
+}
+
+function decode()
+	{
+		var line = P2.value;
+		line += '/';
+		line = reverse(line);
+		ones = CountOnes(line);
+		var result = GetXor(ones);
+		if (result == 0)
+		{
+			P3.value = P1.value;
+			alert("OK");
+		}
+		else
+		{
+			alert("Changed in " + (line.length - result) + " position");
+			P3.value = P1.value;
+		}
+	}
+</script>
+</head>
+
+<body>
+Enter text:
+<br> <br>
+<input name = "P1" id = "P1" />
+<input type = "button" value = "Encode" onclick="encode()"/>
+<br> <br>
+<input name = "P2" id = "P2" />
+<input type = "button" value = "Decode" onclick="decode()" />
+<br> <br>
+<input name = "P3" id = "P3" />
+</body>
