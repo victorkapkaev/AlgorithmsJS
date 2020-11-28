@@ -1,3 +1,4 @@
+// to run it you need in same directory file .txt with input. Then choose one of this modes - code or decode
 let fs = require('fs');
 let arg = process.argv;
 let input, result = "";
