@@ -1,3 +1,4 @@
+// to run it, you must have in same directory file CeasarToCode.txt with text that you want to code.
 let fs = require('fs');
 const readline = require('readline-sync');
 
